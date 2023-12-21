@@ -29,6 +29,9 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -38,10 +41,15 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "newspaper_agency",
+    # "bootstrap4",
+    "crispy_bootstrap4",
+    "debug_toolbar",
+    "crispy_forms",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -55,7 +63,7 @@ ROOT_URLCONF = "newspaper_agency_service.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -67,6 +75,8 @@ TEMPLATES = [
         },
     },
 ]
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 WSGI_APPLICATION = "newspaper_agency_service.wsgi.application"
 
