@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from .models import Topic, Redactor
-from .forms import RedactorCreationForm
+from .forms import RedactorCreationForm, RedactorSearchForm
 
 
 @login_required
@@ -70,32 +70,36 @@ class TopicDeleteView(LoginRequiredMixin, generic.DeleteView):
 class RedactorListView(LoginRequiredMixin, generic.ListView):
     model = Redactor
 
-    # context_object_name = "redactor_list"
-    # template_name = "newspaper_agency/redactor_list.html"
-    #
-    # paginate_by = 5
+    context_object_name = "redactor_list"
+    template_name = "newspaper_agency/redactor_list.html"
 
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     context = super(RedactorListView, self).get_context_data(**kwargs)
-    #     search_username = self.request.GET.get("username", "")
-    #     context["search_form"] = RedactorSearchForm(
-    #         initial={"username": search_username}
-    #     )
-    #     return context
-    #
-    # def get_queryset(self):
-    #     queryset = Redactor.objects.all()
-    #     form = RedactorSearchForm(self.request.GET)
-    #     if form.is_valid():
-    #         return queryset.filter(
-    #             username__icontains=form.cleaned_data["username"]
-    #         )
-    #     return queryset
+    paginate_by = 5
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(RedactorListView, self).get_context_data(**kwargs)
+        search_username = self.request.GET.get("username", "")
+        context["search_form"] = RedactorSearchForm(
+            initial={"username": search_username}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = Redactor.objects.all()
+        form = RedactorSearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(
+                username__icontains=form.cleaned_data["username"]
+            )
+        return queryset
 
 
 # class RedactorDetailView(LoginRequiredMixin, generic.DetailView):
 #     model = Redactor
 #     queryset = Redactor.objects.all().prefetch_related("cars__manufacturer")
+
+
+class RedactorDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Redactor
 
 
 class RedactorCreateView(LoginRequiredMixin, generic.CreateView):

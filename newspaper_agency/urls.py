@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     index,
     TopicListView, TopicCreateView, TopicUpdateView, TopicDeleteView,
-    RedactorListView, RedactorCreateView, RedactorDeleteView
+    RedactorListView, RedactorCreateView, RedactorDeleteView, RedactorDetailView
 )
 
 
@@ -30,20 +30,20 @@ urlpatterns = [
     ),
 
     path("redactor/", RedactorListView.as_view(), name="redactor-list"),
-    # path(
-    #     "redactor/<int:pk>/", RedactorDetailView.as_view(), name="redactor-detail"
-    # ),
+    path(
+        "redactor/<int:pk>/", RedactorDetailView.as_view(), name="redactor-detail"
+    ),
     path("redactor/create/", RedactorCreateView.as_view(), name="redactor-create"),
     # path(
     #     "redactor/<int:pk>/update/",
     #     RedactorYearsExperienceUpdateView.as_view(),
     #     name="redactor-update",
     # ),
-    path(
-        "redactor/<int:pk>/delete/",
-        RedactorDeleteView.as_view(),
-        name="redactor-delete",
-    ),
+    # path(
+    #     "redactor/<int:pk>/delete/",
+    #     RedactorDeleteView.as_view(),
+    #     name="redactor-delete",
+    # ),
 
 ]
 
