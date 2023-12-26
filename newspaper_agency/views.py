@@ -4,8 +4,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from .models import Topic, Redactor
-from .forms import RedactorCreationForm, RedactorSearchForm, RedactorYearsExperienceUpdateForm
+from .models import Topic, Redactor, Newspaper
+from .forms import RedactorCreationForm, RedactorSearchForm, RedactorYearsExperienceUpdateForm, NewspaperForm
 
 
 @login_required
@@ -112,3 +112,23 @@ class RedactorYearsExperienceUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Redactor
     form_class = RedactorYearsExperienceUpdateForm
     success_url = reverse_lazy("newspaper_agency:redactor-list")
+
+
+class NewspaperListView(LoginRequiredMixin, generic.ListView):
+    model = Newspaper
+
+    context_object_name = "newspaper_list"
+    template_name = "newspaper_agency/newspaper_list.html"
+
+    paginate_by = 5
+
+
+class NewspaperCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Newspaper
+    form_class = NewspaperForm
+    success_url = reverse_lazy("newspaper_agency:newspaper-list")
+
+
+class NewspaperDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Newspaper
+
