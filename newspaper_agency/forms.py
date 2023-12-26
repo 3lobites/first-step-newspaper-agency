@@ -26,3 +26,10 @@ class RedactorSearchForm(forms.Form):
             }
         )
     )
+
+
+class RedactorYearsExperienceUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Redactor
+        fields = ["years_of_experience"]
+    pass
