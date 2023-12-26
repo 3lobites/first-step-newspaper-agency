@@ -39,6 +39,5 @@ class Newspaper(models.Model):
     class Meta:
         ordering = ("id", )
 
-
     def __str_(self):
         return f"{self.title} ({self.topic}, redactor: {self.publishers}, publication date - {self.published_date})"
