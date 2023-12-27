@@ -19,7 +19,14 @@
       {% for newspaper in newspaper_list %}
         <li>
           <a href="{% url 'newspaper_agency:newspaper-detail' pk=newspaper.id %}">{{ newspaper.id }}</a>
-          {{ newspaper.topic }} ({{newspaper.title}} {{ newspaper.redactor }})
+          {{ newspaper.topic }} <br>
+            "{{newspaper.title}}" <br>
+          redactors:
+            <ul>
+              {% for redactor in newspaper.publishers.all %}
+                <li>{{ redactor.username }} ({{ redactor.first_name }} {{ redactor.last_name }})</li>
+              {% endfor %}
+            </ul>
         </li>
       {% endfor %}
     </ul>

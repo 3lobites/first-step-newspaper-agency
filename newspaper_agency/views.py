@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from .models import Topic, Redactor, Newspaper
-from .forms import RedactorCreationForm, RedactorSearchForm, RedactorYearsExperienceUpdateForm, NewspaperForm
+from .forms import RedactorCreationForm, RedactorSearchForm, RedactorDataUpdateForm, NewspaperForm
 
 
 @login_required
@@ -110,7 +110,7 @@ class RedactorDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 class RedactorYearsExperienceUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Redactor
-    form_class = RedactorYearsExperienceUpdateForm
+    form_class = RedactorDataUpdateForm
     success_url = reverse_lazy("newspaper_agency:redactor-list")
 
 

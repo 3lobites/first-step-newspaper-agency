@@ -28,10 +28,10 @@ class RedactorSearchForm(forms.Form):
     )
 
 
-class RedactorYearsExperienceUpdateForm(forms.ModelForm):
+class RedactorDataUpdateForm(forms.ModelForm):
     class Meta:
         model = Redactor
-        fields = ["years_of_experience"]
+        fields = ["last_name", "first_name", "years_of_experience"]
     pass
 
 
