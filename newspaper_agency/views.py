@@ -5,7 +5,11 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from .models import Topic, Redactor, Newspaper
-from .forms import RedactorCreationForm, RedactorSearchForm, RedactorDataUpdateForm, NewspaperForm
+from .forms import (
+    RedactorCreationForm, RedactorSearchForm, RedactorDataUpdateForm,
+    NewspaperForm,
+    TopicSearchForm,
+)
 
 
 @login_required
@@ -34,20 +38,20 @@ class TopicListView(LoginRequiredMixin, generic.ListView):
     template_name = "newspaper_agency/topic_list.html"
     paginate_by = 5
 
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     context = super(TopicListView, self).get_context_data(**kwargs)
-    #     name = self.request.GET.get("name", "")
-    #     context["search_form"] = TopicSearchForm(
-    #         initial={"name": name}
-    #     )
-    #     return context
-    #
-    # def get_queryset(self):
-    #     queryset = Topic.objects.all()
-    #     form = TopicSearchForm(self.request.GET)
-    #     if form.is_valid():
-    #         return queryset.filter(name__icontains=form.cleaned_data["model"])
-    #     return queryset
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TopicListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = TopicSearchForm(
+            initial={"name": name}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = Topic.objects.all()
+        form = TopicSearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(name__icontains=form.cleaned_data["name"])
+        return queryset
 
 
 class TopicCreateView(LoginRequiredMixin, generic.CreateView):
