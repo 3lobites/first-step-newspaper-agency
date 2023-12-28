@@ -3,7 +3,7 @@ from .views import (
     index,
     TopicListView, TopicCreateView, TopicUpdateView, TopicDeleteView,
     RedactorListView, RedactorCreateView, RedactorDeleteView, RedactorDetailView, RedactorYearsExperienceUpdateView,
-    NewspaperListView, NewspaperCreateView, NewspaperDetailView
+    NewspaperListView, NewspaperCreateView, NewspaperDetailView, NewspaperUpdateView, NewspaperDeleteView
 )
 
 
@@ -49,6 +49,16 @@ urlpatterns = [
     path("newspaper/", NewspaperListView.as_view(), name="newspaper-list"),
     path("newspaper/create/", NewspaperCreateView.as_view(), name="newspaper-create"),
     path("newspaper/<int:pk>/newspaper-detail", NewspaperDetailView.as_view(), name="newspaper-detail"),
+    path(
+        "newspaper/<int:pk>/update/",
+        NewspaperUpdateView.as_view(),
+        name="newspaper-update",
+    ),
+    path(
+        "newspaper/<int:pk>/delete/",
+        NewspaperDeleteView.as_view(),
+        name="newspaper-delete",
+    ),
 
 ]
 

@@ -7,7 +7,7 @@ from django.views import generic
 from .models import Topic, Redactor, Newspaper
 from .forms import (
     RedactorCreationForm, RedactorSearchForm, RedactorDataUpdateForm,
-    NewspaperForm,
+    NewspaperForm, NewspaperSearchForm,
     TopicSearchForm,
 )
 
@@ -126,6 +126,23 @@ class NewspaperListView(LoginRequiredMixin, generic.ListView):
 
     paginate_by = 5
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(NewspaperListView, self).get_context_data(**kwargs)
+        search_title = self.request.GET.get("title", "")
+        context["search_form"] = NewspaperSearchForm(
+            initial={"title": search_title}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = Newspaper.objects.all()
+        form = NewspaperSearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(
+                title__icontains=form.cleaned_data["title"]
+            )
+        return queryset
+
 
 class NewspaperCreateView(LoginRequiredMixin, generic.CreateView):
     model = Newspaper
@@ -136,3 +153,13 @@ class NewspaperCreateView(LoginRequiredMixin, generic.CreateView):
 class NewspaperDetailView(LoginRequiredMixin, generic.DetailView):
     model = Newspaper
 
+
+class NewspaperUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Newspaper
+    form_class = NewspaperForm
+    success_url = reverse_lazy("newspaper_agency:newspaper-list")
+
+
+class NewspaperDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Newspaper
+    success_url = reverse_lazy("newspaper_agency:newspaper-list")
