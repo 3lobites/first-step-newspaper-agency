@@ -18,7 +18,7 @@ def index(request):
 
     num_topics = Topic.objects.count()
     num_redactors = Redactor.objects.count()
-    # num_manufacturers = Manufacturer.objects.count()
+    num_newspaper = Newspaper.objects.count()
 
     num_visits = request.session.get("num_visits", 0)
     request.session["num_visits"] = num_visits + 1
@@ -26,7 +26,7 @@ def index(request):
     context = {
         "num_topic": num_topics,
         "num_redactors": num_redactors,
-        # "num_manufacturers": num_manufacturers,
+        "num_newspapers": num_newspaper,
         "num_visits": num_visits + 1,
     }
     return render(request, "newspaper_agency/index.html", context=context)
@@ -112,7 +112,7 @@ class RedactorDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("newspaper_agency:redactor-list")
 
 
-class RedactorYearsExperienceUpdateView(LoginRequiredMixin, generic.UpdateView):
+class RedactorUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Redactor
     form_class = RedactorDataUpdateForm
     success_url = reverse_lazy("newspaper_agency:redactor-list")
