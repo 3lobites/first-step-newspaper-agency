@@ -2,13 +2,22 @@
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
 <ul class="sidebar-nav list-group">
-  <li class="list-group-item"><a href="{% url 'newspaper_agency:topic-list' %}">All topics</a></li>
-  <br>
-  <li class="list-group-item"><a href="{% url 'newspaper_agency:index' %}">Go to top</a></li>
+  <li class="list-group-item"><a href="{% url 'newspaper_agency:topic-list' %}">Topics</a></li>
 </ul>
 
 <div class="navbar">
   <a href="#home" class="active">Home</a>
   <a href="#news">News</a>
   <a href="#contact">Contact</a>
+  <ul>
+    <li><a href="{% url 'newspaper_agency:index' %}">Go to top</a></li>
+  </ul>
 </div>
+
+{% comment %}
+<ul class="navbar">
+  <li><a href="#home" class="active">Home</a></li>
+  <li><a href="#news">News</a></li>
+  <li><a href="#contact">Contact</a></li>
+</ul>
+{% endcomment %}
